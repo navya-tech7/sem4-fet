@@ -1,1 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>My Resume</title>
+    <style>
+        body {
+            background-color: lightgray;
+            h1 {
+  text-align: center;
+  color: darkgreen;
+}
+
+h2 {
+  text-align: center;
+  color: darkgreen;
+}
+ h3{
+     text-align: center;
+     color:black;
+ }
+
+p {
+  text-align: center;
+  color: black;
+}
+            ul{
+                text-align:center;
+                color:black;
+            }
+    </style>
+</head>
+<body>
+
+
+    <h1>Navya A</h1>
+    <h2>Computer Science Engineering Student</h2>
+     
+      <button onclick="changeCourse()">Change Course</button
+     <h3>Aspiring Software Developer</h3> 
+    <h3>About Me</h3>
+    <p>
+    
+        Computer Science Engineering student with a strong interest in software development<br>
+        Passionate about learning new technologies and building real-world applications<br>
+        Focused on improving problem-solving and technical skills<br>
+    </p>
+
+    <h3>Tech Stack</h3>
+    <p>
+        My tech stack includes programming languages such as C, Python, and Java. <br>
+        I also have basic knowledge of web development using HTML, CSS, and JavaScript. <br>
+        Additionally, I am exploring cloud computing and DevOps to enhance my technical skills.
+    </p>
+
+    <a href="https://navya-tech7.github.io/sem4-fet/">My Resume</a>
+
+
+
+
+<script>
+        function changeCourse() {
+            let newCourse = prompt("Enter new course/title:");
+
+            if (newCourse !== null && newCourse.trim() !== "") {
+                document.getElementById("course").innerText = newCourse;
+            } else {
+                alert("Please enter valid text");
+            }
+        }
+    </script>
+</body>
+</html>
 
