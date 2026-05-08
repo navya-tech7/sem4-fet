@@ -1,98 +1,88 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>My Resume</title>
+    <title>Technical Skills List</title>
+
     <style>
         body {
-            background-color: lightgray;
+            background-color: #e0f2fe;
+            font-family: Arial;
+            padding: 20px;
         }
 
-        h1 {
-            text-align: center;
-            color: darkgreen;
-        }
-
-        h2 {
-            text-align: center;
-            color: darkgreen;
-        }
-
-        h3 {
-            text-align: center;
-            color: black;
-        }
-
-        p {
-            text-align: center;
-            color: black;
+        input, select, button {
+            margin: 5px;
+            padding: 5px;
         }
 
         ul {
-            text-align: center;
-            color: black;
-        }
-
-        button {
-            margin-top: 20px;
-            padding: 10px 15px;
-            background-color: #a259ff;
-            color: white;
-            border: none;
+            background: white;
+            padding: 10px;
             border-radius: 5px;
-            cursor: pointer;
-            display: block;
-            margin-left: auto;
-            margin-right: auto;
         }
     </style>
 </head>
 <body>
 
-    <h1>Navya A</h1>
-    <h2 id="course">Computer Science Engineering Student</h2>
+<h1>Technical Skills</h1>
 
-    <button onclick="changeCourse()">Change Course</button>
+<input id="skillInput" placeholder="Enter skill">
+<select id="categorySelect">
+    <option value="prog">Programming Languages</option>
+    <option value="tools">Tools & Technologies</option>
+    <option value="core">Core Computer Science</option>
+</select>
 
-    <h3>Aspiring Software Developer</h3> 
-    <h3>About Me</h3>
+<button onclick="addSkill()">Add</button>
+<button onclick="removeSkill()">Remove</button>
 
-    <p>
-        Computer Science Engineering student with a strong interest in software development<br>
-        Passionate about learning new technologies and building real-world applications<br>
-        Focused on improving problem-solving and technical skills<br>
-    </p>
+<ol>
+    <li>Programming Languages
+        <ul id="prog"><li>C</li><li>Python</li><li>Java</li></ul>
+    </li>
+    <li>Tools & Technologies
+        <ul id="tools"><li>VS Code</li><li>Git</li><li>Linux</li></ul>
+    </li>
+    <li>Core Computer Science
+        <ul id="core"><li>Programming</li><li>Data Structures</li><li>Algorithms</li></ul>
+    </li>
+</ol>
 
-    <h3>Tech Stack</h3>
+<script>
+function getList() {
+    return document.getElementById(categorySelect.value);
+}
 
-    <p>
-        My tech stack includes programming languages such as C, Python, and Java. <br>
-        I also have basic knowledge of web development using HTML, CSS, and JavaScript. <br>
-        Additionally, I am exploring cloud computing and DevOps to enhance my technical skills.
-    </p>
+function addSkill() {
+    debugger;
+    let val = skillInput.value.trim();
+    if (!val) return alert("Enter skill");
 
-    <a href="https://navya-tech7.github.io/sem4-fet/">My Resume</a>
+    let list = getList();
+    for (let li of list.children)
+        if (li.textContent.toLowerCase() === val.toLowerCase())
+            return alert("Already exists");
 
-  <script>
-        function changeCourse() {
-            let input = prompt("Enter new course/title:");
+    list.innerHTML += `<li>${val}</li>`;
+    skillInput.value = "";
+}
 
-           
-            let pattern = /^[A-Za-z\s]+$/;
+function removeSkill() {
+    let val = skillInput.value.trim().toLowerCase();
+    let list = getList();
 
-            if (input === null) {
-                alert("You cancelled.");
-            }
-            else if (input.trim() === "") {
-                alert("Input cannot be empty!");
-            }
-            else if (!pattern.test(input)) {
-                alert("Only letters and spaces allowed!");
-            }
-            else {
-                document.getElementById("course").innerText = input;
-                alert("Course updated successfully!");
-            }
+    for (let li of list.children) {
+        if (li.textContent.toLowerCase() === val) {
+            li.remove();
+            skillInput.value = "";
+            return;
         }
-    </script>
+    }
+    alert("Not found");
+}
+</script>
+<a href="">LIST</a>
 </body>
 </html>
+
+
