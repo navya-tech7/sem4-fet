@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Club Registration Portal</title>
+
+    <style>
+        * { box-sizing: border-box; }
+
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #a1c4fd, #c2e9fb, #d4fc79, #96e6a1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 40px 20px;
+            margin: 0;
+        }
+
+        form {
+            width: 100%;
+            max-width: 500px;
+            background: white;
+            padding: 25px;
+            border-radius: 16px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+
+        fieldset {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            padding: 15px;
+        }
+
+        legend {
+            font-weight: bold;
+            color: #1565c0;
+            padding: 0 10px;
+        }
+
+        input[type="text"],
+        input[type="number"],
+        textarea,
+        select {
+            width: 100%;
+            padding: 10px;
+            margin: 8px 0;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+        }
+
+        .row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin: 5px 0;
+            font-size: 14px;
+        }
+
+        select[multiple] {
+            height: 90px;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background: #1565c0;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        #result {
+            width: 100%;
+            max-width: 500px;
+            margin-top: 20px;
+        }
+
+        .student-card {
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            border-left: 5px solid #1565c0;
+        }
+
+        .error {
+            color: red;
+            font-size: 13px;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+
+<body>
+
+<form id="form">
+
+    <h2>🎓 Student Club Registration</h2>
+
+    <fieldset>
+        <legend>Student Details</legend>
+
+        <input type="text" id="name" placeholder="Full Name">
+
+        <input type="number" id="age" placeholder="Age">
+
+        <div class="row">
+            <span>Year:</span>
+
+            <input type="radio" name="year" value="1st Year" id="y1">
+            <label for="y1">1st</label>
+
+            <input type="radio" name="year" value="2nd Year" id="y2">
+            <label for="y2">2nd</label>
+
+            <input type="radio" name="year" value="3rd Year" id="y3">
+            <label for="y3">3rd</label>
+
+            <input type="radio" name="year" value="4th Year" id="y4">
+            <label for="y4">4th</label>
+        </div>
+
+    </fieldset>
+
+    <fieldset>
+        <legend>Skills & Interests</legend>
+
+        <div class="row">
+            <input type="checkbox" name="skills" value="Coding">
+            Coding
+        </div>
+
+        <div class="row">
+            <input type="checkbox" name="skills" value="Design">
+            Designing
+        </div>
+
+        <div class="row">
+            <input type="checkbox" name="skills" value="Public Speaking">
+            Public Speaking
+        </div>
+
+        <div class="row">
+            <input type="checkbox" name="skills" value="Management">
+            Management
+        </div>
+
+        <p>
+            <small>Select Preferred Clubs:</small>
+        </p>
+
+        <select id="clubs" multiple>
+            <option value="Coding Club">Coding Club</option>
+            <option value="Dance Club">Dance Club</option>
+            <option value="Music Club">Music Club</option>
+            <option value="Photography Club">Photography Club</option>
+        </select>
+
+    </fieldset>
+
+    <textarea id="about" placeholder="Tell us about yourself..."></textarea>
+
+    <div id="error" class="error"></div>
+
+    <button type="submit">Register</button>
+
+</form>
+
+<div id="result"></div>
+
+<script>
+
+let students = [];
+
+
+document.getElementById("form").addEventListener("submit", function(e) {
+
+    e.preventDefault();
+
+    const errorDiv = document.getElementById("error");
+    errorDiv.innerText = "";
+
+    
+    const name = document.getElementById("name").value.trim();
+    const age = document.getElementById("age").value;
+
+   
+    const yearNode = document.querySelector('input[name="year"]:checked');
+    const year = yearNode ? yearNode.value : "Not Selected";
+
+   
+    let skills = [];
+
+    const skillNodes = document.getElementsByName("skills");
+
+    for (let i = 0; i < skillNodes.length; i++) {
+
+        if (skillNodes[i].checked) {
+            skills.push(skillNodes[i].value);
+        }
+    }
+
+    let clubs = [];
+
+    const clubOptions = document.getElementById("clubs").options;
+
+    for (let i = 0; i < clubOptions.length; i++) {
+
+        if (clubOptions[i].selected) {
+            clubs.push(clubOptions[i].value);
+        }
+    }
+
+    const about = document.getElementById("about").value.trim();
+
+  
+    if (!name || !age) {
+        errorDiv.innerText = "Name and Age are required.";
+        return;
+    }
+
+   
+    let suggestion = suggestClub(skills, clubs);
+
+    students.unshift({
+        name,
+        age,
+        year,
+        skills,
+        clubs,
+        about,
+        suggestion
+    });
+
+    displayStudents();
+
+    this.reset();
+});
+
+
+function suggestClub(skills, clubs) {
+
+    if (skills.includes("Coding")) {
+        return "Recommended for Hackathon Team";
+    }
+
+    if (clubs.includes("Dance Club")) {
+        return "Eligible for Cultural Fest";
+    }
+
+    return "General Member";
+}
+
+
+function displayStudents() {
+
+    const resultDiv = document.getElementById("result");
+
+    resultDiv.innerHTML = "<h3>Registered Students</h3>";
+
+    students.forEach((s) => {
+
+        resultDiv.innerHTML += `
+
+            <div class="student-card">
+
+                <strong>
+                    ${s.name} (${s.age}y, ${s.year})
+                </strong>
+
+                <br>
+
+                <small>
+                    Skills:
+                    ${s.skills.length > 0 ? s.skills.join(", ") : "None"}
+                </small>
+
+                <br>
+
+                <small>
+                    Clubs:
+                    ${s.clubs.join(", ")}
+                </small>
+
+                <p>
+                    <i>"${s.about}"</i>
+                </p>
+
+                <b style="color:#1565c0">
+                    Status: ${s.suggestion}
+                </b>
+
+            </div>
+        `;
+    });
+}
+
+</script>
+
+</body>
+</html>
