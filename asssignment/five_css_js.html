@@ -1,82 +1,135 @@
 
+
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Z-Index Single Box Demo</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pull Down Menu and List Box</title>
+<style>
 
-  <style>
-    body {
-      font-family: Arial;
-      text-align: center;
-      margin-top: 50px;
-    }
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
 
-    .container {
-      position: relative;
-      width: 200px;
-      height: 200px;
-      margin: auto;
-    }
+body{
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-family:Arial, sans-serif;
+    background:linear-gradient(135deg,#141e30,#243b55);
+}
 
-    .box {
-      position: absolute;
-      width: 200px;
-      height: 200px;
-      color: white;
-      font-size: 25px;
-      line-height: 200px;
-      border-radius: 10px;
-    }
+.container{
+    width:400px;
+    padding:30px;
+    background:white;
+    border-radius:20px;
+    box-shadow:0 10px 25px rgba(0,0,0,0.3);
+    text-align:center;
+}
 
-    .red {
-      background: red;
-      z-index: 1;
-    }
+h1{
+    color:#243b55;
+    margin-bottom:20px;
+}
 
-    .blue {
-      background: blue;
-      z-index: 2;
-    }
+h2{
+    color:#333;
+    margin-top:15px;
+    margin-bottom:10px;
+}
 
-    .green {
-      background: green;
-      z-index: 3;
-    }
+select{
+    width:100%;
+    padding:10px;
+    border:none;
+    border-radius:10px;
+    outline:none;
+    background:#f1f1f1;
+    font-size:16px;
+}
 
-    button {
-      margin-top: 20px;
-      padding: 10px;
-      cursor: pointer;
-    }
-  </style>
+select:focus{
+    border:2px solid #243b55;
+}
+
+button{
+    margin-top:15px;
+    padding:10px 20px;
+    border:none;
+    border-radius:10px;
+    background:linear-gradient(135deg,#243b55,#141e30);
+    color:white;
+    font-size:16px;
+    cursor:pointer;
+    transition:0.3s;
+}
+
+button:hover{
+    transform:scale(1.05);
+}
+p{
+    margin-top:15px;
+    font-size:18px;
+    font-weight:bold;
+    color:#243b55;
+}
+hr{
+    margin:25px 0;
+}
+#homepage{
+    display:inline-block;
+    margin-top:20px;
+    padding:10px 20px;
+    background:#a9abd8;
+    border-radius:20px;
+    text-decoration:none;
+    color:black;
+}
+</style>
 </head>
-
 <body>
+<div class="container">
+    <h1>JavaScript Menu Demo</h1>
+    <!-- Pull Down Menu -->
+    <h2>Select Course</h2>
+    <select id="course">
+        <option value="">-- Select Course --</option>
+        <option value="Java">Java</option>
+        <option value="Python">Python</option>
+        <option value="JavaScript">JavaScript</option>
+    </select>
+    <p id="courseResult"></p>
+    <hr>
+    <!-- List Box -->
+    <h2>Select Hobby</h2>
+    <select id="hobby" size="4">
+        <option>Reading</option>
+        <option>Gaming</option>
+        <option>Music</option>
+        <option>Traveling</option>
+    </select>
+    <br>
+    <!-- Event Handler -->
+    <button onclick="showHobby()">Show Hobby</button>
+    <p id="hobbyResult"></p>
+    <a id="homepage"href="https://nayanam09.github.io/sem-fet/">Home Page</a>
+</div>
+<script>
+    // Event Listener for Pull Down Menu
+    document.getElementById("course").addEventListener("change", function(){
+        document.getElementById("courseResult").innerHTML ="Selected Course : " + this.value;
+    });
+    // Event Handler Function
+    function showHobby(){
 
-  <h1>Z-Index Demo</h1>
-
-  <!-- All boxes overlap in one place -->
-  <div class="container">
-    <div class="box red" id="redBox">Red</div>
-    <div class="box blue" id="blueBox">Blue</div>
-    <div class="box green" id="greenBox">Green</div>
-  </div>
-
-  <br>
-
-  <!-- Buttons -->
-  <button onclick="showBox('redBox')">Show Red</button>
-  <button onclick="showBox('blueBox')">Show Blue</button>
-  <button onclick="showBox('greenBox')">Show Green</button>
-
-  <script>
-    let z = 3;
-
-    function showBox(id) {
-      z++;
-      document.getElementById(id).style.zIndex = z;
+        let hobby =document.getElementById("hobby").value;
+        document.getElementById("hobbyResult").innerHTML ="Selected Hobby : " + hobby;
     }
-  </script>
-
+</script>
 </body>
 </html>
